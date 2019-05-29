@@ -1,0 +1,18 @@
+<div>
+    <img src="" alt="Swift Image" height="200" width="200">
+</div>
+    <div class="sidebyside">
+        <div class="side">
+          {{#each swiftarticles}}
+            <div class="burgers">{{this.summary}}. {{this.text}}<button data-id="{{this.title}}" data-devour="{{this.summary}}" class="devour">Save It!</button></div>
+          {{/each}}
+        </div>
+    </div>
+{{!-- <h1>Eat-Da-Burger!</h1>
+<form class="create-form">
+    <input type="text" id="newburger" name="burger" size="50">
+    <br>
+    <br>
+    <button type="submit" name="submit-newburger">Submit</button>
+</form>
+<p>Enter the burger you want to eat. Then click the Submit button</p> --}}
