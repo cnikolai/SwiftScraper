@@ -99,5 +99,5 @@ require("./controllers/controller.js")(app);
 
 // Listen on port 3000
 app.listen(MONGODB_URI, function() {
-  console.log("App running on port " + MONGODB_URI!");
+  console.log("App running on port " + MONGODB_URI);
 });
