@@ -6,10 +6,12 @@ var mongoose = require("mongoose");
 var app = express();
 //var PORT = process.env.PORT || 8080;
 
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+// If deployed, use the deployed database. Otherwise use the local swiftheadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/swiftheadlines";
 
 mongoose.connect(MONGODB_URI);
+
+var PORT = process.env.PORT || 3000;
 
 var express = require("express");
 
@@ -98,6 +100,6 @@ require("./controllers/controller.js")(app);
 // });
 
 // Listen on port 3000
-app.listen(MONGODB_URI, function() {
-  console.log("App running on port " + MONGODB_URI);
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT);
 });
