@@ -14,7 +14,7 @@ mongoose.connect(MONGODB_URI);
 var express = require("express");
 
 // Requiring our models for syncing
-var db = require("./models");
+//var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -98,6 +98,6 @@ require("./controllers/controller.js")(app);
 // });
 
 // Listen on port 3000
-app.listen(3000, function() {
-  console.log("App running on port 3000!");
+app.listen(MONGODB_URI, function() {
+  console.log("App running on port " + MONGODB_URI!");
 });
