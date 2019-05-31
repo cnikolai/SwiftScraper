@@ -1,43 +1,51 @@
 // Make sure we wait to attach our handlers until the DOM is fully loaded.
 $(function() {
-    $(".devour").on("click", function(event) {
-      var id = $(this).data("id");
-      var devour = $(this).data("devour");
+    $(".button").on("click", function(event) {
+      console.log("inside save article button click");
+      var id = "1";
+      var title = $(this).data("title");
+      var summary = $(this).data("summary");
+      var text = $(this).data("text");
   
-      var newDevour = {
-        id: id,
-        devoured: devour
+      var newArticle = {
+        title: title,
+        summary: summary,
+        text: text
       };
   
       // Send the PUT request.
-      $.ajax("/api/burgers/" + id, {
+      $.ajax("/api/swiftarticles/", {
         type: "PUT",
-        data: newDevour
+        data: newArticle
       }).then(
         function() {
-          console.log("changed devour to of id: ", id);
+          console.log("inserted new article to saved articles ", id);
           // Reload the page to get the updated list
           location.reload();
         }
       );
     });
+
+    $(".deletebutton").on("click", function(event) {
+      console.log("inside delete article button click");
+      var id = "1";
+      var title = $(this).data("title");
+      var summary = $(this).data("summary");
+      var text = $(this).data("text");
   
-    $(".create-form").on("submit", function(event) {
-      // Make sure to preventDefault on a submit event.
-      event.preventDefault();
-      console.log("just submited form");
-  
-      var newBurger = {
-        name: $("#newburger").val().trim()
+      var newArticle = {
+        title: title,
+        summary: summary,
+        text: text
       };
   
-      // Send the POST request.
-      $.ajax("/api/burgers", {
-        type: "POST",
-        data: newBurger
+      // Send the PUT request.
+      $.ajax("/api/swiftarticles/", {
+        type: "DELETE",
+        data: newArticle
       }).then(
         function() {
-          console.log("created new burger");
+          console.log("Deleted article from saved articles ", id);
           // Reload the page to get the updated list
           location.reload();
         }

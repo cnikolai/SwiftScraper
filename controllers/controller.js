@@ -14,6 +14,39 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/saved", function(req, res) {
+    db.SavedArticles.find({}).then(function(data) {
+      var hbsObject = {
+        swiftarticles: data
+      };
+      res.render("indexsavedarticles", hbsObject);
+    });
+  });
+
+  app.put("/api/swiftarticles", function(req, res) {
+    var swiftarticle = req.body;
+    console.log("swiftarticle object: ", swiftarticle)
+    db.SavedArticles.create(swiftarticle).then(function(data) {
+      var hbsObject = {
+        swiftarticles: swiftarticle
+      };
+      //console.log("saved swift article: ", swiftarticle);
+      res.render("index", hbsObject);
+    });
+  });
+
+  app.delete("/api/swiftarticles", function(req, res) {
+    var swiftarticle = req.body;
+    console.log("swiftarticle object: ", swiftarticle)
+    db.SavedArticles.deleteOne(swiftarticle).then(function(data) {
+      var hbsObject = {
+        swiftarticles: swiftarticle
+      };
+      //console.log("saved swift article: ", swiftarticle);
+      res.render("indexsavedarticles", hbsObject);
+    });
+  });
+
   app.get("/scrape", function(req, res) {
     axios.get("https://theswiftdev.com/").then(function(response) {
   
@@ -34,7 +67,7 @@ module.exports = function(app) {
       results.push({
         title: title,
         summary: summary,
-        text: text
+        text: "https://theswiftdev.com" + text
       });
     });
   

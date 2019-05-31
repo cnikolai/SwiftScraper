@@ -1,5 +1,5 @@
 body,html {
-    background-color: goldenrod;
+    background-color: lightgrey;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -7,31 +7,50 @@ body,html {
     /* height: 100%; */
 }
 
-.devour {
-    background-color: cornflowerblue;
-    margin-left: 10px;
-}
-
-/* #burger-block {
-    background-color: white;
-} */
-
-.burgers {
-    background-color: white;
-    width: 300px;
-    margin-right: 20px;
-}
-
-#newburger {
-    height: 40px;
-    font-size: 14pt;
-}
-
 .sidebyside {
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: left; */
+}
+
+.swiftarticle {
+    background-color: white;
+    margin: 20px;
+    text-align: left;
+    /* display: flex; */
+    /* justify-content: left; */
+}
+
+.title {
+    background-color: lightskyblue;
+    padding: 20px;
+}
+
+.summary {
+    padding: 20px;
+}
+
+a {
+    padding: 20px;
+}
+
+.header {
+    background-color: lightskyblue;
+    padding: 20px;
+    /* flex-direction: row; */
+    text-align: left;
+}
+
+.text {
+    padding: 20px;
+}
+
+.button, .deletebutton {
+    padding: 10px;
 }
 
 .side {
-    float: left;
+    display: flex;
+    justify-content: left;
+    background-color: white;
+    margin: 20px;
 }
