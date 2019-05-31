@@ -1,5 +1,5 @@
 <div id="notes-modal-block">
     {{#each notes}}
-    <div>{{this._id}}:  {{this.title}}: {{this.body}}</div><button data-id="{{this._id}}" class="delete" value="Delete It!"></button>
+    <div>{{this.title}}:{{this.body}}<button data-id="{{this._id}}" data-title="titled" class="deletenote">x</button></div>
     {{/each}}
 </div>

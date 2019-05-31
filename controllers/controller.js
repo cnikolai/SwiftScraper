@@ -1,3 +1,7 @@
+//??? question: not deleting notes from database
+//??? quesiton: how to refresh the page on the modal
+//??? question: how to pass in a parameter variable to a partial
+
 // Import the model to use its database functions.
 var db = require("../models");
 // Require axios and cheerio. This makes the scraping possible
@@ -15,15 +19,16 @@ module.exports = function(app) {
   });
 
   app.get("/api/saved", function(req, res) {
-    //var notes = [];
+    var notes = [];
     db.SavedArticles.find({})
     // Specify that we want to populate the retrieved users with any associated notes
     .populate("notes")
     .then(function(dbSavedArticle) {
-      // for (var i = 0; i <= dbNotes.length; i++) {
-      //   notes.push(dbNotes[i]);
-      // }
-      console.log("notes: ",dbSavedArticle.notes);
+       for (var i = 0; i <= dbSavedArticle.length; i++) {
+         notes.push(dbSavedArticle[i]);
+       }
+      console.log("notes: ",dbSavedArticle[0].notes);
+      console.log("notes: ",dbSavedArticle[1].notes);
       // If any Users are found, send them to the client with any associated Notes
       //res.json(dbSavedArticle);
       //TODO: look at following code
@@ -33,7 +38,7 @@ module.exports = function(app) {
       //   admin: req.user.eUserType,
       //   sBranch: sBranch
       // });
-      res.render("indexsavedarticles", {swiftarticles: dbSavedArticle, notes: dbSavedArticle.notes});
+      res.render("indexsavedarticles", {swiftarticles: dbSavedArticle, notes: notes});
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
@@ -99,21 +104,49 @@ module.exports = function(app) {
     res.send("scrape complete!");
   });
 });
+
+
+app.delete("/api/swiftnote/", function(req, res) {
+  var noteid = req.body.id;
+  console.log("noteid: ", noteid);
+  var swiftarticletitle = req.body.title;
+  console.log("article title: ", swiftarticletitle);
+  //console.log("swiftarticle object: ", swiftarticle)
+  //db.SavedArticles.updateOne({title: swiftarticletitle},{$pull: {_id: noteid}}, { multi: true })
+  db.Note.deleteOne({_id: noteid})
+  .then(function(data) {
+    console.log("removed swift note from article: ", );
+    //res.render("indexsavedarticles", hbsObject);
+    //res.redirect("/api/saved/");
+    res.render("indexsavedarticles", {notes: {_id:noteid}});
+  });
+});
 // Route for saving a new Note to the db and associating it with a User
 app.post("/submitnote", function(req, res) {
+  console.log("req.body: ",req.body);
+  console.log("articletitle: ",req.body.articletitle);
   // Create a new Note in the db
   db.Note.create({"title":req.body.title, "body": req.body.body})
     .then(function(dbNote) {
       // If a Note was created successfully, find one User (there's only one) and push the new Note's _id to the User's `notes` array
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.SavedArticles.findOneAndUpdate({title: req.body.articletitle}, { $push: { notes: dbNote._id } }, { new: true });
-    })
-    .then(function(dbSavedArticle) {
+      console.log("dbNote: ", dbNote);
+      console.log("articletitle: ",req.body.articletitle);
+      return db.SavedArticles.findOneAndUpdate({title: req.body.articletitle}, {$push: { notes: dbNote._id } }, { new: true });
+    }).then(function(data) {
+        console.log("data: ",data);
+        db.SavedArticles.find({}).then(function (data2) {
+          var hbsObject = {
+            swiftarticles: data2
+          };
+          //console.log("saved swift article: ", swiftarticle);
+          //res.render("indexsavedarticles", {hbsObject,title:req.body.title, body: req.body.body});
+          res.redirect("/api/saved/");
+        });
+        })
       // If the SavedArticle was updated successfully, send it back to the client
       //res.json(dbSavedArticle);
-      res.render("indexsavedarticles", req.body.articletitle);
-    })
     .catch(function(err) {
       // If an error occurs, send it back to the client
       res.json(err);

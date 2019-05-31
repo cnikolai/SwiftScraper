@@ -44,8 +44,12 @@ a {
     padding: 20px;
 }
 
-.button, .deletebutton, .articlenotes {
+.button, .deletebutton, .articlenotes, .notebutton {
     padding: 10px;
+}
+
+.deletenote {
+  background-color: red
 }
 
 .articlenotesmodal {
