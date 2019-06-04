@@ -19,7 +19,7 @@ $(function() {
         data: newArticle
       }).then(
         function() {
-          console.log("inserted new article to saved articles ", id);
+          console.log("inserted new article to saved articles ");
           // Reload the page to get the updated list
           location.reload();
         }
@@ -28,7 +28,7 @@ $(function() {
 
     $(".deletebutton").on("click", function(event) {
       console.log("inside delete article button click");
-      var id = "1";
+      //var id = "1";
       var title = $(this).data("title");
       var summary = $(this).data("summary");
       var text = $(this).data("text");
@@ -45,7 +45,7 @@ $(function() {
         data: newArticle
       }).then(
         function() {
-          console.log("Deleted article from saved articles ", id);
+          console.log("Deleted article from saved articles ");
           // Reload the page to get the updated list
           location.reload();
         }
@@ -112,7 +112,7 @@ $(function() {
 
       //add new note to the dom
 
-      console.log(newArticle);
+      //console.log(newArticle);
   //}
 }
  }
